@@ -1,7 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
   const filterLabels = document.querySelectorAll('.section-blog__filter-label');
   const dropDownMenus = document.querySelectorAll('.section-blog__filter-dropdown');
-  const searchInput = document.querySelector('.section-blog__filter-search input')
+  const searchInput = document.querySelector('.section-blog__filter-search input');
+  const clearAllBtn = document.querySelector('.section-blog__filter-clear .section-blog__filter-clear-btn');
 
   // Toggle class active to the filter items
   filterLabels.forEach(label => {
@@ -21,9 +22,8 @@ document.addEventListener('DOMContentLoaded', () => {
         // Check if any filter button in this dropdown is active and toggle clear button accordingly
         if (checkActiveFilters(dropdown)) {
           clearBtn.style.display = 'block';
-        } else {
-          clearBtn.style.display = 'none';
-        }
+          clearAllBtn.style.display = 'block';
+        } 
         // filter resource items in the relevant dropdown menu
         filterResourceItems(dropdown);
       });
@@ -36,32 +36,46 @@ document.addEventListener('DOMContentLoaded', () => {
       });
       clearBtn.style.display = 'none';
       filterResourceItems(dropdown);
+      // Check if any filter button in any dropdown is active and toggle clear all button accordingly
+      if(checkActiveFilters()){
+        clearAllBtn.style.display = 'block';
+      } else{
+        clearAllBtn.style.display = 'none';
+      }
     });
+  });
 
-    // Add event listener for search input
-    searchInput.addEventListener('input',()=>{
-      filterResourceItems();
-    })
+  // Add event listener for clear all buttons
+  clearAllBtn.addEventListener('click', clearAllFilters);
+
+  // Add event listener for search input
+  searchInput.addEventListener('input', () => {
+    filterResourceItems();
+    if (searchInput.value.trim() === '') {
+      clearAllBtn.style.display = checkActiveFilters() ? 'block' : 'none';
+    } else {
+      clearAllBtn.style.display = 'block';
+    }
   });
 });
 
 // Function to check if any filter button in a dropdown is active
-function checkActiveFilters(dropdown) {
-  const filterBtns = dropdown.querySelectorAll('button');
-  let isActive = false;
-  filterBtns.forEach(btn => {
+function checkActiveFilters() {
+  const allFilterBtns = document.querySelectorAll('.section-blog__filter-dropdown button');
+  let activeFiltersCount = 0;
+  allFilterBtns.forEach(btn => {
     if (btn.classList.contains('active')) {
-      isActive = true;
+      activeFiltersCount++;
     }
   });
-  return isActive;
+  return activeFiltersCount > 0;
 }
 
 // Function to filter resource items based on active filter buttons and search input
 function filterResourceItems() {
   const resourceItems = document.querySelectorAll('.section-blog__resources-item');
   let shouldShowAtLeastOne = false; // Flag to track if at least one item should be shown
-  const searchInput = document.querySelector('.section-blog__filter-search input').value.trim().toLowerCase();
+  const searchInputValue = document.querySelector('.section-blog__filter-search input').value.trim().toLowerCase();
 
   resourceItems.forEach(item => {
     const title = item.querySelector('.section-blog__resources-item-title').textContent.toLowerCase();
@@ -76,31 +90,22 @@ function filterResourceItems() {
     let shouldShow = true;
 
     // Check if item matches active topic filters
-    if (
-      activeTopicFilters.length > 0 &&
-      !activeTopicFilters.includes(datasetTopic)
-    ) {
+    if (activeTopicFilters.length > 0 && !activeTopicFilters.includes(datasetTopic)) {
       shouldShow = false;
     }
 
     // Check if item matches active type filters
-    if (
-      activeTypeFilters.length > 0 &&
-      !activeTypeFilters.includes(datasetType)
-    ) {
+    if (activeTypeFilters.length > 0 && !activeTypeFilters.includes(datasetType)) {
       shouldShow = false;
     }
 
     // Check if item matches active industry filters
-    if (
-      activeIndustryFilters.length > 0 &&
-      !activeIndustryFilters.includes(datasetIndustry)
-    ) {
+    if (activeIndustryFilters.length > 0 && !activeIndustryFilters.includes(datasetIndustry)) {
       shouldShow = false;
     }
 
     // Check if item matches search input
-    if(searchInput && !title.includes(searchInput)){
+    if (searchInputValue && !title.includes(searchInputValue)) {
       shouldShow = false;
     }
 
@@ -114,12 +119,34 @@ function filterResourceItems() {
   });
 
   // Show or hide noArticlesMessage based on if at least one item should be shown
-  const noArticlesMessage = document.querySelector(
-    '.section-blog__resources-message'
-  );
+  const noArticlesMessage = document.querySelector('.section-blog__resources-message');
   if (!shouldShowAtLeastOne) {
     noArticlesMessage.style.display = 'block';
   } else {
     noArticlesMessage.style.display = 'none';
   }
+}
+
+// Function to clear all active filters
+function clearAllFilters() {
+  const allFilterBtns = document.querySelectorAll('.section-blog__filter-dropdown button');
+  const clearAllBtn = document.querySelector('.section-blog__filter-clear .section-blog__filter-clear-btn');
+  const searchInput = document.querySelector('.section-blog__filter-search input');
+
+  allFilterBtns.forEach(btn => {
+    btn.classList.remove('active');
+  });
+
+  // Hide all clear buttons
+  const clearBtns = document.querySelectorAll('.section-blog__filter-clear-btn');
+  clearBtns.forEach(btn => {
+    btn.style.display = 'none';
+  });
+
+  // Clear search input and update resource items display
+  searchInput.value = '';
+  filterResourceItems();
+
+  // Hide the clear all button
+  clearAllBtn.style.display = 'none';
 }
