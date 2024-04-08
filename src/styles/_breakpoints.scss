@@ -1,0 +1,11 @@
+@mixin media($direction, $size) {
+  @if $direction == down {
+    @media screen and (max-width: $size) {
+      @content;
+    }
+  } @else if $direction == up {
+    @media screen and (min-width: calc($size + 1px)) {
+      @content;
+    }
+  }
+}
