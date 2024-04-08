@@ -9,8 +9,14 @@
     }
   }
 
+  &__inner {
+    display: flex;
+    flex-direction: column;
+  }
+
   &__body {
     padding: 14px 16px 31px 12px;
+    flex: 1 1 auto;
   }
 
   &__media {

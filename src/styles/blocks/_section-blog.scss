@@ -147,6 +147,10 @@
         margin-block-start: 30px;
       }
     }
+
+    &-message {
+      display: none;
+    }
   }
 
   [type='search'] {
