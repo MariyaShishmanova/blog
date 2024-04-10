@@ -1,173 +1,205 @@
 class BlogFilter {
-  constructor() {
-      // Store references to frequently accessed DOM elements
-      this.filterLabels = document.querySelectorAll('.section-blog__filter-label');
-      this.dropDownMenus = document.querySelectorAll('.section-blog__filter-dropdown');
-      this.searchInput = document.querySelector('.section-blog__filter-search input');
-      this.clearAllBtn = document.querySelector('.section-blog__filter-clear .section-blog__filter-clear-btn');
-      this.resourceItems = document.querySelectorAll('.section-blog__resources-item');
-      this.filterButtons = document.querySelectorAll('.section-blog__filter-dropdown button')
+    constructor() {
 
-      // Initialize blog state
-      this.blogState = {
-          activeFilters: {
-              topic: [],
-              type: [],
-              industry: []
-          }
-      };
 
-      // Initialize event listeners
-      this.initializeListeners();
-  }
+        // Initialize blog state
+        this.blogState = {
+            activeFilters: {
+                topic: [],
+                type: [],
+                industry: []
+            },
+            items: [],
+            filteredItems: [],
+        };
 
-  initializeListeners() {
-      document.addEventListener('DOMContentLoaded', () => {
-          this.filterLabels.forEach(label => {
-              label.addEventListener('click', () => {
-                  label.parentElement.classList.toggle('active');
-              });
-          });
+        // Initialize event listeners
+        this.initializeListeners();
+    }
 
-          this.dropDownMenus.forEach(dropdown => {
-              const filterBtns = dropdown.querySelectorAll('button');
-              const clearBtn = dropdown.querySelector('.section-blog__filter-clear-btn');
+    getDomElements() {
+        // Store references to frequently accessed DOM elements
+        this.filterLabels = document.querySelectorAll('.section-blog__filter-label');
+        this.dropDownMenus = document.querySelectorAll('.section-blog__filter-dropdown');
+        this.searchInput = document.querySelector('.section-blog__filter-search input');
+        this.clearAllBtn = document.querySelector('.section-blog__filter-clear .section-blog__filter-clear-btn');
+        this.resourceItems = document.querySelectorAll('.section-blog__resources-item');
+        this.filterButtons = document.querySelectorAll('.section-blog__filter-dropdown button')
+    }
 
-              filterBtns.forEach(btn => {
-                  btn.addEventListener('click', () => {
-                      this.toggleFilterButton(btn);
-                      this.updateFiltersAndResourceItems();
-                      this.toggleClearButton(clearBtn);
-                  });
-              });
+    handleInitialState() {
+        this.blogState.items = Array.from(document.querySelectorAll('.section-blog__resources-item'));
+        this.blogState.filteredItems = this.blogState.items;
+    }
 
-              clearBtn.addEventListener('click', () => {
-                  this.clearFilterButtons(filterBtns);
-                  this.updateFiltersAndResourceItems();
-                  this.toggleClearButton(clearBtn);
-              });
-          });
+    initializeListeners() {
+        document.addEventListener('DOMContentLoaded', () => {
+            this.getDomElements();
+            this.handleInitialState();
 
-          this.clearAllBtn.addEventListener('click', () => {
-              this.clearAllFilters();
-          });
+            this.filterLabels.forEach(label => {
+                label.addEventListener('click', () => {
+                    label.parentElement.classList.toggle('active');
+                });
+            });
 
-          this.searchInput.addEventListener('input', () => {
-              this.updateFiltersAndResourceItems();
-          });
-      });
-  }
+            this.dropDownMenus.forEach(dropdown => {
+                const filterBtns = dropdown.querySelectorAll('button');
+                const clearBtn = dropdown.querySelector('.section-blog__filter-clear-btn');
+                const { filterType } = dropdown.dataset;
 
-  toggleFilterButton(btn) {
-      btn.classList.toggle('active');
-  }
+                if (filterBtns.length > 0) {
+                    filterBtns.forEach(btn => {
+                        btn.addEventListener('click', () => {
+                            this.handleButtonFiltersClick(filterType, btn.dataset.filterName);
+                            this.toggleFilterButton(btn);
+                            this.handleDropdownClearButtonVisibility(filterType, clearBtn);
+                        });
+                    });
+                }
 
-  toggleClearButton(clearBtn) {
-      const dropdown = clearBtn.closest('.section-blog__filter-dropdown');
-      if (this.checkActiveFilters(dropdown)) {
-          clearBtn.style.display = 'block';
-          this.clearAllBtn.style.display = 'block';
-      } else {
-          clearBtn.style.display = 'none';
-      }
-  }
 
-  updateFiltersAndResourceItems() {
-      this.updateActiveFilters();
-      this.filterResourceItems();
-      this.toggleClearAllButton();
-  }
+                clearBtn.addEventListener('click', () => {
+                    this.clearFilterButtons(filterBtns);
+                    this.updateFiltersAndResourceItems();
+                    this.toggleClearButton(clearBtn);
+                });
+            });
 
-  updateActiveFilters() {
-      this.blogState.activeFilters = {
-          topic: [],
-          type: [],
-          industry: []
-      };
+            this.clearAllBtn.addEventListener('click', () => {
+                this.clearAllFilters();
+            });
 
-      this.dropDownMenus.forEach(dropdown => {
-          const filterType = dropdown.dataset.filterType;
-          const activeFilters = this.blogState.activeFilters[filterType];
-          dropdown.querySelectorAll('button.active').forEach(btn => {
-              activeFilters.push(btn.textContent);
-          });
-      });
-  }
+            this.searchInput.addEventListener('input', () => {
+                this.updateFiltersAndResourceItems();
+            });
+        });
+    }
 
-  toggleClearAllButton() {
-      const shouldShowClearAllBtn = this.checkActiveFilters() || this.searchInput.value.trim() !== '';
-      this.clearAllBtn.style.display = shouldShowClearAllBtn ? 'block' : 'none';
-  }
+    toggleFilterButton(btn) {
+        btn.classList.toggle('active');
+    }
 
-  checkActiveFilters(dropdown) {
-      const allFilterBtns = dropdown ? dropdown.querySelectorAll('button') : this.filterButtons;
-      return Array.from(allFilterBtns).some(btn => btn.classList.contains('active'));
-  }
+    toggleClearButton(clearBtn) {
+        const dropdown = clearBtn.closest('.section-blog__filter-dropdown');
+        if (this.checkActiveFilters(dropdown)) {
+            clearBtn.style.display = 'block';
+            this.clearAllBtn.style.display = 'block';
+        } else {
+            clearBtn.style.display = 'none';
+        }
+    }
 
-  filterResourceItems() {
-      const searchInputValue = this.searchInput.value.trim().toLowerCase();
+    updateFiltersAndResourceItems() {
+        this.filterResourceItems();
+        // this.toggleClearAllButton();
+    }
 
-      this.resourceItems.forEach(item => {
-          const title = item.querySelector('.section-blog__resources-item-title').textContent.toLowerCase();
-          const datasetTopic = item.dataset.topic;
-          const datasetType = item.dataset.type;
-          const datasetIndustry = item.dataset.industry;
+    clearActiveFilters() {
+        this.blogState.activeFilters = {
+            topic: [],
+            type: [],
+            industry: []
+        };
+    }
 
-          const activeFilters = this.blogState.activeFilters;
-          const activeTopicFilters = activeFilters.topic;
-          const activeTypeFilters = activeFilters.type;
-          const activeIndustryFilters = activeFilters.industry;
+    handleButtonFiltersClick(filterType, name) {
+        const activeFilters = this.blogState.activeFilters[filterType];
+        const filterIndex = activeFilters.indexOf(name);
 
-          let shouldShow = true;
+        if (filterIndex === -1) {
+            activeFilters.push(name);
+        } else {
+            activeFilters.splice(filterIndex, 1);
+        }
+    }
 
-          if (activeTopicFilters.length > 0 && !activeTopicFilters.includes(datasetTopic)) {
-              shouldShow = false;
-          }
+    handleDropdownClearButtonVisibility(filterType, button) {
+        const activeFilters = this.blogState.activeFilters[filterType];
 
-          if (activeTypeFilters.length > 0 && !activeTypeFilters.includes(datasetType)) {
-              shouldShow = false;
-          }
+        button.style.display = activeFilters.length > 0 ? 'block' : 'none';
+    }
 
-          if (activeIndustryFilters.length > 0 && !activeIndustryFilters.includes(datasetIndustry)) {
-              shouldShow = false;
-          }
+    toggleClearAllButton() {
+        const shouldShowClearAllBtn = this.checkActiveFilters() || this.searchInput.value.trim() !== '';
+        this.clearAllBtn.style.display = shouldShowClearAllBtn ? 'block' : 'none';
+    }
 
-          if (searchInputValue && !title.includes(searchInputValue)) {
-              shouldShow = false;
-          }
+    checkActiveFilters(dropdown) {
+        const allFilterBtns = dropdown ? dropdown.querySelectorAll('button') : this.filterButtons;
+        return Array.from(allFilterBtns).some(btn => btn.classList.contains('active'));
+    }
 
-          item.style.display = shouldShow ? 'block' : 'none';
-      });
+    filterResourceItems() {
+        const searchInputValue = this.searchInput.value.trim().toLowerCase();
 
-      this.showOrHideNoArticlesMessage();
-  }
+        this.resourceItems.forEach(item => {
+            const title = item.querySelector('.section-blog__resources-item-title').textContent.toLowerCase();
+            const datasetTopic = item.dataset.topic;
+            const datasetType = item.dataset.type;
+            const datasetIndustry = item.dataset.industry;
 
-  clearFilterButtons(filterBtns) {
-      filterBtns.forEach(btn => {
-          btn.classList.remove('active');
-      });
-  }
+            const activeFilters = this.blogState.activeFilters;
+            const activeTopicFilters = activeFilters.topic;
+            const activeTypeFilters = activeFilters.type;
+            const activeIndustryFilters = activeFilters.industry;
 
-  clearAllFilters() {
-      this.filterButtons.forEach(btn => {
-          btn.classList.remove('active');
-      });
+            let shouldShow = true;
 
-      this.dropDownMenus.forEach(dropdown => {
-          const clearBtn = dropdown.querySelector('.section-blog__filter-clear-btn');
-          this.clearFilterButtons(Array.from(dropdown.querySelectorAll('button.active')));
-          this.toggleClearButton(clearBtn);
-      });
+            if (activeTopicFilters.length > 0 && !activeTopicFilters.includes(datasetTopic)) {
+                shouldShow = false;
+            }
 
-      this.searchInput.value = '';
-      this.updateFiltersAndResourceItems();
-  }
+            if (activeTypeFilters.length > 0 && !activeTypeFilters.includes(datasetType)) {
+                shouldShow = false;
+            }
 
-  showOrHideNoArticlesMessage() {
-      const shouldShowAtLeastOne = Array.from(this.resourceItems).some(item => item.style.display === 'block');
-      const noArticlesMessage = document.querySelector('.section-blog__resources-message');
-      noArticlesMessage.style.display = shouldShowAtLeastOne ? 'none' : 'block';
-  }
+            if (activeIndustryFilters.length > 0 && !activeIndustryFilters.includes(datasetIndustry)) {
+                shouldShow = false;
+            }
+
+            if (searchInputValue && !title.includes(searchInputValue)) {
+                shouldShow = false;
+            }
+
+            item.style.display = shouldShow ? 'block' : 'none';
+        });
+
+        this.handleNoResults(this.resourceItems.filter(item => item.style.display === 'block'));
+    }
+
+
+    clearFilterButtons(filterBtns) {
+        filterBtns.forEach(btn => {
+            btn.classList.remove('active');
+        });
+    }
+
+    removeActiveClassFromFilterButtons() {
+        this.filterButtons.forEach(btn => {
+            btn.classList.remove('active');
+        });
+    }
+
+    clearAllClearButtons() {
+        this.dropDownMenus.forEach(dropdown => {
+            const clearBtn = dropdown.querySelector('.section-blog__filter-clear-btn');
+            clearBtn.style.display = 'none';
+        });
+    }
+
+    clearAllFilters() {
+        this.removeActiveClassFromFilterButtons();
+        this.clearAllClearButtons();
+
+        this.searchInput.value = '';
+
+        this.filterResourceItems();
+    }
+
+    handleNoResults(visibleItems) {
+        visibleItems.length === 0 ? noArticlesMessage.style.display = 'block' : noArticlesMessage.style.display = 'none';
+    }
 }
 
 const blogFilter = new BlogFilter();
