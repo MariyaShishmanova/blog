@@ -6,6 +6,7 @@ class BlogFilter {
       this.searchInput = document.querySelector('.section-blog__filter-search input');
       this.clearAllBtn = document.querySelector('.section-blog__filter-clear .section-blog__filter-clear-btn');
       this.resourceItems = document.querySelectorAll('.section-blog__resources-item');
+      this.filterButtons = document.querySelectorAll('.section-blog__filter-dropdown button')
 
       // Initialize blog state
       this.blogState = {
@@ -99,7 +100,7 @@ class BlogFilter {
   }
 
   checkActiveFilters(dropdown) {
-      const allFilterBtns = dropdown ? dropdown.querySelectorAll('button') : document.querySelectorAll('.section-blog__filter-dropdown button');
+      const allFilterBtns = dropdown ? dropdown.querySelectorAll('button') : this.filterButtons;
       return Array.from(allFilterBtns).some(btn => btn.classList.contains('active'));
   }
 
@@ -148,8 +149,7 @@ class BlogFilter {
   }
 
   clearAllFilters() {
-      const filterBtns = document.querySelectorAll('.section-blog__filter-dropdown button');
-      filterBtns.forEach(btn => {
+      this.filterButtons.forEach(btn => {
           btn.classList.remove('active');
       });
 
