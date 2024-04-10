@@ -25,7 +25,7 @@
                 <img src="./arrow-down.svg">
               </div>
 
-              <div class="section-blog__filter-dropdown">
+              <div class="section-blog__filter-dropdown" data-filter-type="topic">
                 <ul class="section-blog__filter-list">
                   <li>
                     <button>Higher education</button>
@@ -54,7 +54,7 @@
                 <img src="./arrow-down.svg">
               </div>
 
-              <div class="section-blog__filter-dropdown">
+              <div class="section-blog__filter-dropdown" data-filter-type="type">
                 <ul class="section-blog__filter-dropdown-list">
                   <li>
                     <button>Webinars</button>
@@ -79,14 +79,14 @@
                 <img src="./arrow-down.svg">
               </div>
 
-              <div class="section-blog__filter-dropdown">
+              <div class="section-blog__filter-dropdown" data-filter-type="industry">
                 <ul class="section-blog__filter-list">
                   <li>
-                    <button>Industry</button>
+                    <button>Education</button>
                   </li>
   
                   <li>
-                    <button>Education</button>
+                    <button>Finance</button>
                   </li>
   
                   <li>
@@ -98,10 +98,14 @@
               </div>
             </li>
           </ul>
+
+          <div class="section-blog__filter-clear">
+            <button class="section-blog__filter-clear-btn">Clear all</button>
+          </div>
         </div>
 
         <div class="section-blog__resources">
-          <article class="section-blog__resources-item resource">
+          <article class="section-blog__resources-item resource" data-topics="Corporate training" data-type="Case Studies" data-industry="Finance">
             <a href="#">
               <div class="resource__inner">
                 <div class="resource__media">
@@ -117,14 +121,14 @@
                     <span>Case Studies</span>
                   </div>
 
-                  <h3 class="resource__title">Salesforce: How Salesforce doubled their events’ reach and increased
+                  <h3 class="section-blog__resources-item-title resource__title">Salesforce: How Salesforce doubled their events’ reach and increased
                     engagement by 536%!</h3>
                 </div>
               </div>
             </a>
           </article>
 
-          <article class="section-blog__resources-item resource">
+          <article class="section-blog__resources-item resource" data-topics="Higher education" data-type="Webinars" data-industry="Education">
             <a href="#">
               <div class="resource__inner">
                 <div class="resource__media">
@@ -140,13 +144,13 @@
                     <span>Webinars</span>
                   </div>
 
-                  <h3 class="resource__title">The secret formula behind Salesforce’s 536% engagement boost</h3>
+                  <h3 class="section-blog__resources-item-title resource__title">The secret formula behind Salesforce’s 536% engagement boost</h3>
                 </div>
               </div>
             </a>
           </article>
 
-          <article class="section-blog__resources-item resource">
+          <article class="section-blog__resources-item resource" data-topics="Customer education" data-type="Webinars" data-industry="Enterprise">
             <a href="#">
               <div class="resource__inner">
                 <div class="resource__media">
@@ -162,13 +166,13 @@
                     <span>Webinars</span>
                   </div>
 
-                  <h3 class="resource__title">From MQL to pipeline: webinar secrets for marketing & sales</h3>
+                  <h3 class="section-blog__resources-item-title resource__title">From MQL to pipeline: webinar secrets for marketing & sales</h3>
                 </div>
               </div>
             </a>
           </article>
 
-          <article class="section-blog__resources-item resource">
+          <article class="section-blog__resources-item resource" data-topic="Marketing events" data-type="Webinars" data-industry="Finance">
             <a href="#">
               <div class="resource__inner">
                 <div class="resource__media">
@@ -184,13 +188,13 @@
                     <span>Webinars</span>
                   </div>
 
-                  <h3 class="resource__title">Unlock internal event power: live Kaltura demo</h3>
+                  <h3 class="section-blog__resources-item-title resource__title">Unlock internal event power: live Kaltura demo</h3>
                 </div>
               </div>
             </a>
           </article>
 
-          <article class="section-blog__resources-item resource">
+          <article class="section-blog__resources-item resource" data-topic="Higher education" data-type="Case Studies" data-industry="Finance">
             <a href="#">
               <div class="resource__inner">
                 <div class="resource__media">
@@ -206,14 +210,14 @@
                     <span>Case Studies</span>
                   </div>
 
-                  <h3 class="resource__title">The 10-minute guide to effective internal communications and events in
+                  <h3 class="section-blog__resources-item-title resource__title">The 10-minute guide to effective internal communications and events in
                     2024</h3>
                 </div>
               </div>
             </a>
           </article>
 
-          <article class="section-blog__resources-item resource">
+          <article class="section-blog__resources-item resource" data-topic="Marketing events" data-type="Whitepapers and Guides" data-industry="Enterprise">
             <a href="#">
               <div class="resource__inner">
                 <div class="resource__media">
@@ -229,13 +233,13 @@
                     <span>Whitepapers and Guides</span>
                   </div>
 
-                  <h3 class="resource__title">From town halls to SKOs: create internal events that dazzle!</h3>
+                  <h3 class="section-blog__resources-item-title resource__title">From town halls to SKOs: create internal events that dazzle!</h3>
                 </div>
               </div>
             </a>
           </article>
 
-          <article class="section-blog__resources-item resource">
+          <article class="section-blog__resources-item resource" data-topic="Higher education" data-type="Case Studies" data-industry="Education">
             <a href="#">
               <div class="resource__inner">
                 <div class="resource__media">
@@ -251,14 +255,14 @@
                     <span>Case Studies</span>
                   </div>
 
-                  <h3 class="resource__title">Salesforce: How Salesforce doubled their events’ reach and increased
+                  <h3 class="section-blog__resources-item-title resource__title">Salesforce: How Salesforce doubled their events’ reach and increased
                     engagement by 536%!</h3>
                 </div>
               </div>
             </a>
           </article>
 
-          <article class="section-blog__resources-item resource">
+          <article class="section-blog__resources-item resource" data-topic="Marketing events" data-type="Webinars" data-industry="Enterprise">
             <a href="#">
               <div class="resource__inner">
                 <div class="resource__media">
@@ -274,13 +278,13 @@
                     <span>Webinars</span>
                   </div>
 
-                  <h3 class="resource__title">The secret formula behind Salesforce’s 536% engagement boost</h3>
+                  <h3 class="section-blog__resources-item-title resource__title">The secret formula behind Salesforce’s 536% engagement boost</h3>
                 </div>
               </div>
             </a>
           </article>
 
-          <article class="section-blog__resources-item resource">
+          <article class="section-blog__resources-item resource" data-topic="Marketing events" data-type="Webinars" data-industry="Finance">
             <a href="#">
               <div class="resource__inner">
                 <div class="resource__media">
@@ -296,13 +300,13 @@
                     <span>Webinars</span>
                   </div>
 
-                  <h3 class="resource__title">From MQL to pipeline: webinar secrets for marketing & sales</h3>
+                  <h3 class="section-blog__resources-item-title resource__title">From MQL to pipeline: webinar secrets for marketing & sales</h3>
                 </div>
               </div>
             </a>
           </article>
 
-          <article class="section-blog__resources-item resource">
+          <article class="section-blog__resources-item resource" data-topic="Customer education" data-type="Webinars" data-industry="Enterprise">
             <a href="#">
               <div class="resource__inner">
                 <div class="resource__media">
@@ -318,13 +322,13 @@
                     <span>Webinars</span>
                   </div>
 
-                  <h3 class="resource__title">Unlock internal event power: live Kaltura demo</h3>
+                  <h3 class="section-blog__resources-item-title resource__title">Unlock internal event power: live Kaltura demo</h3>
                 </div>
               </div>
             </a>
           </article>
 
-          <article class="section-blog__resources-item resource">
+          <article class="section-blog__resources-item resource" data-topic="Marketing events" data-type="Case Studies" data-industry="Finance">
             <a href="#">
               <div class="resource__inner">
                 <div class="resource__media">
@@ -340,14 +344,14 @@
                     <span>Case Studies</span>
                   </div>
 
-                  <h3 class="resource__title">The 10-minute guide to effective internal communications and events in
+                  <h3 class="section-blog__resources-item-title resource__title">The 10-minute guide to effective internal communications and events in
                     2024</h3>
                 </div>
               </div>
             </a>
           </article>
 
-          <article class="section-blog__resources-item resource">
+          <article class="section-blog__resources-item resource" data-topic="Corporate training" data-type="Whitepapers and Guides" data-industry="Finance">
             <a href="#">
               <div class="resource__inner">
                 <div class="resource__media">
@@ -363,13 +367,13 @@
                     <span>Whitepapers and Guides</span>
                   </div>
 
-                  <h3 class="resource__title">From town halls to SKOs: create internal events that dazzle!</h3>
+                  <h3 class="section-blog__resources-item-title resource__title">From town halls to SKOs: create internal events that dazzle!</h3>
                 </div>
               </div>
             </a>
           </article>
 
-          <article class="section-blog__resources-item resource">
+          <article class="section-blog__resources-item resource" data-topic="Customer education" data-type="Case Studies" data-industry="Enterprise">
             <a href="#">
               <div class="resource__inner">
                 <div class="resource__media">
@@ -385,14 +389,14 @@
                     <span>Case Studies</span>
                   </div>
 
-                  <h3 class="resource__title">Salesforce: How Salesforce doubled their events’ reach and increased
+                  <h3 class="section-blog__resources-item-title resource__title">Salesforce: How Salesforce doubled their events’ reach and increased
                     engagement by 536%!</h3>
                 </div>
               </div>
             </a>
           </article>
 
-          <article class="section-blog__resources-item resource">
+          <article class="section-blog__resources-item resource" data-topic="Marketing events" data-type="Webinars" data-industry="Finance">
             <a href="#">
               <div class="resource__inner">
                 <div class="resource__media">
@@ -408,13 +412,13 @@
                     <span>Webinars</span>
                   </div>
 
-                  <h3 class="resource__title">The secret formula behind Salesforce’s 536% engagement boost</h3>
+                  <h3 class="section-blog__resources-item-title resource__title">The secret formula behind Salesforce’s 536% engagement boost</h3>
                 </div>
               </div>
             </a>
           </article>
 
-          <article class="section-blog__resources-item resource">
+          <article class="section-blog__resources-item resource" data-topic="Marketing events" data-type="Webinars" data-industry="Finance">
             <a href="#">
               <div class="resource__inner">
                 <div class="resource__media">
@@ -430,13 +434,13 @@
                     <span>Webinars</span>
                   </div>
 
-                  <h3 class="resource__title">From MQL to pipeline: webinar secrets for marketing & sales</h3>
+                  <h3 class="section-blog__resources-item-title resource__title">From MQL to pipeline: webinar secrets for marketing & sales</h3>
                 </div>
               </div>
             </a>
           </article>
 
-          <article class="section-blog__resources-item resource">
+          <article class="section-blog__resources-item resource" data-topic="Corporate training" data-type="Webinars" data-industry="Finance">
             <a href="#">
               <div class="resource__inner">
                 <div class="resource__media">
@@ -452,13 +456,13 @@
                     <span>Webinars</span>
                   </div>
 
-                  <h3 class="resource__title">Unlock internal event power: live Kaltura demo</h3>
+                  <h3 class="section-blog__resources-item-title resource__title">Unlock internal event power: live Kaltura demo</h3>
                 </div>
               </div>
             </a>
           </article>
 
-          <article class="section-blog__resources-item resource">
+          <article class="section-blog__resources-item resource" data-topic="Customer education" data-type="Case Studies" data-industry="Enterprise">
             <a href="#">
               <div class="resource__inner">
                 <div class="resource__media">
@@ -474,14 +478,14 @@
                     <span>Case Studies</span>
                   </div>
 
-                  <h3 class="resource__title">The 10-minute guide to effective internal communications and events in
+                  <h3 class="section-blog__resources-item-title resource__title">The 10-minute guide to effective internal communications and events in
                     2024</h3>
                 </div>
               </div>
             </a>
           </article>
 
-          <article class="section-blog__resources-item resource">
+          <article class="section-blog__resources-item resource" data-topic="Marketing events" data-type="Whitepapers and Guides" data-industry="Finance">
             <a href="#">
               <div class="resource__inner">
                 <div class="resource__media">
@@ -497,11 +501,13 @@
                     <span>Whitepapers and Guides</span>
                   </div>
 
-                  <h3 class="resource__title">From town halls to SKOs: create internal events that dazzle!</h3>
+                  <h3 class="section-blog__resources-item-title resource__title">From town halls to SKOs: create internal events that dazzle!</h3>
                 </div>
               </div>
             </a>
           </article>
+
+          <div class="section-blog__resources-message">No articles match the selected filters</div>
         </div>
       </div>
     </div>

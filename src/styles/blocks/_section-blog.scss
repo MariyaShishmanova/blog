@@ -23,6 +23,10 @@
       }
     }
 
+    &-items {
+      margin-block-end: 50px;
+    }
+
     &-item {
       font-size: 18px;
       padding-bottom: 10px;
@@ -121,7 +125,7 @@
       }
     }
 
-    &-clear-btn {
+    button.section-blog__filter-clear-btn {
       color: #006efa;
       font-weight: 700;
       transition: color 0.3s ease;
@@ -142,10 +146,18 @@
       gap: 35px;
     }
 
+    @include media(down, $tablet) {
+      margin-block-start: 30px;
+    }
+
     &-item + &-item {
       @include media(down, $tablet) {
         margin-block-start: 30px;
       }
+    }
+
+    &-message {
+      display: none;
     }
   }
 
